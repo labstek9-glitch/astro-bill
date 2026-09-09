@@ -1,6 +1,6 @@
 poll_seconds: 2
-request_timeout_seconds: 8
-max_concurrency: 8
+request_timeout_seconds: 1.5
+max_concurrency: 16
 default_contracts: 10
 max_notional_usd: 25.0
 min_edge_after_fee: 0.01
@@ -27,3 +27,16 @@ series:
 spot:
   primary: coinbase
   fallback: binance
+
+# Model confidence is data quality, not empirical win probability.
+max_spread: 0.06
+max_data_age_seconds: 3
+market_refresh_seconds: 15
+discovery_refresh_seconds: 300
+realized_vol: true
+cf_average_proxy: true
+cross_venue_check: true
+# Annualized volatility bounds; others default to 0.25x–3x asset prior.
+vol_clamps:
+  BTC: [0.1375, 1.65]
+  ETH: [0.175, 2.10]

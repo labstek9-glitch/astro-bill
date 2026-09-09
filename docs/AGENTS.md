@@ -1,4 +1,8 @@
-# Multi-agent review — Astro Bill v0.1
+# Repository guidance — ASTRO BILL V2
+
+V2: obey docs/PROMPT_CONTRACT.md. Public, unauthenticated analysis only. Do not implement login, place_order, private endpoints, or browser trading. Keep tests green. V2 delivery was reviewed with deterministic tests and local HTTP/DOM checks; no multi-agent or visual-browser review is claimed.
+
+## Historical V1 notes
 
 Four passes after the first build. All four are locked.
 
@@ -20,4 +24,4 @@ Four passes after the first build. All four are locked.
 ## Operator
 - `python -m astrobill` is the only command that needs to exist.
 - Ctrl+C exits. Logs append. No order endpoint is imported.
-- Next upgrade (not this commit): authenticated Kalshi WS + CF passthrough on the local box only.
+- V2 supersedes the old authenticated-feed suggestion. Any settlement-data improvement must preserve the no-login/no-private-endpoint contract.
