@@ -1,0 +1,29 @@
+poll_seconds: 2
+request_timeout_seconds: 8
+max_concurrency: 8
+default_contracts: 10
+max_notional_usd: 25.0
+min_edge_after_fee: 0.01
+sit_if_seconds_left_below: 8
+log_dir: logs
+write_web_snapshot: true
+web_snapshot_path: web/latest.json
+
+# Seed list. Engine also auto-discovers any *15M series tagged Crypto.
+series:
+  - KXBTC15M
+  - KXETH15M
+  - KXSOL15M
+  - KXXRP15M
+  - KXDOGE15M
+  - KXBNB15M
+  - KXHYPE15M
+  - KXADA15M
+  - KXBCH15M
+  - KXNEAR15M
+  - KXTON15M
+  - KXZEC15M
+
+spot:
+  primary: coinbase
+  fallback: binance

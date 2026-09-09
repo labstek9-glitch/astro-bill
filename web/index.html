@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Astro Bill — Kalshi 15m</title>
+  <style>
+    body { background:#0b0b0b; color:#eee; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; margin:24px; }
+    h1 { font-size:18px; letter-spacing:0.08em; }
+    .dim { color:#888; font-size:12px; }
+    table { border-collapse: collapse; width:100%; margin-top:16px; }
+    th, td { text-align:left; padding:6px 8px; border-bottom:1px solid #222; font-size:12px; }
+    th { color:#9ad; }
+    .buy { color:#3ddc84; }
+    .sit { color:#777; }
+  </style>
+</head>
+<body>
+  <h1>ASTRO BILL</h1>
+  <p class="dim" id="meta">waiting for web/latest.json — run <code>python -m astrobill</code></p>
+  <table>
+    <thead>
+      <tr>
+        <th>AST</th><th>TICKER</th><th>SEC</th><th>SPOT</th><th>STRIKE</th>
+        <th>FAIR</th><th>YES</th><th>EDGE</th><th>ACTION</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <script>
+    async function tick() {
+      try {
+        const r = await fetch("latest.json?ts=" + Date.now());
+        const d = await r.json();
+        document.getElementById("meta").textContent = d.ts + " — " + d.disclaimer;
+        const body = document.getElementById("rows");
+        body.innerHTML = "";
+        for (const row of d.rows || []) {
+          const tr = document.createElement("tr");
+          const act = row.action || "SIT";
+          tr.innerHTML = [
+            row.asset, row.ticker, row.secs_left,
+            Number(row.spot).toFixed(2),
+            Number(row.strike).toFixed(2),
+            Number(row.fair).toFixed(3),
+            Number(row.yes_bid).toFixed(2) + "/" + Number(row.yes_ask).toFixed(2),
+            Number(row.edge).toFixed(3),
+            act
+          ].map(v => "<td>" + v + "</td>").join("");
+          tr.querySelector("td:last-child").className = act.startsWith("BUY") ? "buy" : "sit";
+          body.appendChild(tr);
+        }
+      } catch (e) {
+        document.getElementById("meta").textContent = "latest.json not found yet";
+      }
+    }
+    tick();
+    setInterval(tick, 2000);
+  </script>
+</body>
+</html>
